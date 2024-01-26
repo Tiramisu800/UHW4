@@ -8,6 +8,12 @@ using static UnityEngine.GraphicsBuffer;
 public class GameMenager : MonoBehaviour
 {
     public event Action OnGameStart;
+    public static Action OnCashI;
+    public static Action OnCashII;
+    public static Action OnCashIII;
+    public static Action OnCash0;
+    public static Action OnDefenceI;
+    public static Action OnDefenceII;
 
     public static GameMenager Instance;
 
@@ -42,17 +48,47 @@ public class GameMenager : MonoBehaviour
         UpdatePlayerMoney();
     }
 
+    private void Update()
+    {
+        if (_playerMoney == 0)
+        {
+            OnCash0?.Invoke();
+        }
+        else if (_playerMoney >= 500)
+        {
+            OnCashI?.Invoke();
+        }
+        else if (_playerMoney >= 2000)
+        {
+            OnCashII?.Invoke();
+        }
+        else if (_playerMoney >= 5000)
+        {
+            OnCashIII?.Invoke();
+        }
+        else if (turrettescounter == 10)
+        {
+            OnDefenceI?.Invoke();
+        }
+        else if (turrettescounter == 30)
+        {
+            OnDefenceII?.Invoke();
+        }
+    }
+
     private void StartGame()
     {
         OnGameStart?.Invoke();
     }
 
+    int turrettescounter = 0;
     private void InitTurretUI()
     {
         foreach (var turret in _turretes)
         {
             var btn = Instantiate(_turretButton, _turretsBtnRoot);
             btn.Init(turret, _controller);
+            turrettescounter++;
         }
     }
 

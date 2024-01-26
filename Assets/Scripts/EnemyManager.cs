@@ -1,3 +1,4 @@
+using Assets.Scripts;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,11 +8,15 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
     public event Action OnStartNewWawe;
+    public static Action OnEnemyStriked;
+    public static Action OnEnemyMegaStriked;
 
     public static EnemyManager Instance;
+    int enemycounter = 0;
 
     [SerializeField] private GameMenager _gameMenager;
-    [SerializeField] private EnemyFabric _fabric;
+    //[SerializeField] private EnemyFabric _fabric;
+    [SerializeField] private EnemyFactory _fabric;
     [SerializeField] private int _waweIndex;
     [SerializeField] private int _enemyCount;
     [SerializeField] private Transform _destinationTarget;
@@ -48,6 +53,7 @@ public class EnemyManager : MonoBehaviour
 
     private void OnGameStart()
     {
+        _started = true;
         StartCoroutine(CreateWawe(_enemyCount, _fabric.GetNextWave(0).WaveDeley));
     }
 
@@ -62,6 +68,15 @@ public class EnemyManager : MonoBehaviour
         if (EnemyList.Count > 0 && EnemyList.All(x => x.gameObject.activeSelf == false) && !_started)
         {
             OnStartNewWawe?.Invoke();
+        }
+
+        if (enemycounter == 10)
+        {
+            OnEnemyStriked?.Invoke();
+        }
+        else if (enemycounter == 49)
+        {
+            OnEnemyMegaStriked?.Invoke();
         }
     }
 
@@ -88,12 +103,14 @@ public class EnemyManager : MonoBehaviour
             enemy.WaveCost = wave.EnemyCost;
             enemy.SetDestination(_destinationTarget.position);
             enemy.OnEnemyKilled += OnEnemyKilled;
+            enemycounter++;
             EnemyList.Add(enemy);
             yield return new WaitForSeconds(2f);
         }
 
         _started = false;
     }
+
 
     private void OnEnemyKilled(float money)
     {

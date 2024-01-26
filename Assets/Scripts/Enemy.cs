@@ -9,12 +9,12 @@ public abstract class Enemy : MonoBehaviour, IEnemy
 {
     public event Action<float> OnEnemyKilled;
 
-    [SerializeField] private NavMeshAgent _agent;
-    [SerializeField] private Transform _moveTarget;
-    [SerializeField] private Image _healthBar; 
-    [SerializeField] private float _health;
+    [SerializeField] protected NavMeshAgent _agent;
+    [SerializeField] protected Transform _moveTarget;
+    [SerializeField] protected Image _healthBar; 
+    [SerializeField] protected float _health;
 
-    private float _maxHealth;
+    protected float _maxHealth;
 
     public float WaveCost { get; internal set; }
 
@@ -28,7 +28,7 @@ public abstract class Enemy : MonoBehaviour, IEnemy
         _agent.SetDestination(targetPosition);
     }
 
-    public void TakeDamage(float dmg)
+    public virtual void TakeDamage(float dmg)
     {
         _health -= dmg;
 
@@ -53,5 +53,6 @@ public abstract class Enemy : MonoBehaviour, IEnemy
 
 public interface IEnemy
 {
+    event Action<float> OnEnemyKilled;
     void TakeDamage(float dmg);
 }

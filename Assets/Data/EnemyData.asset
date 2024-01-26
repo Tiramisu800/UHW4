@@ -9,15 +9,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75af5c18d2a83344fb2e4ffa272629ed, type: 3}
+  m_Script: {fileID: 11500000, guid: 3508373b3fd8cf94491f0bf61c34fb6d, type: 3}
   m_Name: EnemyData
   m_EditorClassIdentifier: 
   Enemies:
-  - Enemy: {fileID: 6586576945247502438, guid: 9f3026a9a5d60eb4ca0959ff99425b5a, type: 3}
-    WaveDeley: 5
-    EnemyCost: 5
-    EnemyType: 0
-  - Enemy: {fileID: -5179974989570478527, guid: 7bcf5b08ea01e09499b036e4a6f2ec50, type: 3}
-    WaveDeley: 10
+  - Enemy: {fileID: 6831732975991016251, guid: bf5d2bde6832b7144823f091b484900a, type: 3}
+    WaveDeley: 1
     EnemyCost: 10
+    EnemyType: 0
+  - Enemy: {fileID: 8472929593760144930, guid: 2abeff1126e910b4c883be7943040746, type: 3}
+    WaveDeley: 5
+    EnemyCost: 50
     EnemyType: 1
+  - Enemy: {fileID: 3599152443101121564, guid: 3a86a5cfe525bb643889b73f4b5e3500, type: 3}
+    WaveDeley: 5
+    EnemyCost: 30
+    EnemyType: 2
+  - Enemy: {fileID: 3705547174890474562, guid: e2ca6c792755b8044ac97486624222cf, type: 3}
+    WaveDeley: 5
+    EnemyCost: 20
+    EnemyType: 0
+  - Enemy: {fileID: 3016012430244153650, guid: a91ec83d77a3e1b4aa67d8ebd4782ae7, type: 3}
+    WaveDeley: 5
+    EnemyCost: 100
+    EnemyType: 1
+  - Enemy: {fileID: 8520859025533018491, guid: 395257b25ee477846aaf9eb2ff1620ee, type: 3}
+    WaveDeley: 10
+    EnemyCost: 60
+    EnemyType: 2
