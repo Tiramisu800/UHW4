@@ -7,7 +7,7 @@ public class EnemyTankMobile : Enemy
     private float _defence = 10f;
     private void Update()
     {
-        base._agent.speed = 1.1f;
+        base._agent.speed = 1.5f;
         base._maxHealth += _defence;
     }
 

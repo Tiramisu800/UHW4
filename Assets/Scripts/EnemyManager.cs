@@ -82,10 +82,10 @@ public class EnemyManager : MonoBehaviour
 
     public IEnumerator CreateWave(List<WaveInfo> waves)
     {
-        foreach (WaveInfo data in waves)
+        foreach (WaveInfo wave in waves)
         {
             
-            yield return new WaitForSeconds(data.WaveDelay);
+            yield return new WaitForSeconds(wave.WaveDelay);
 
             if (enemies.Count > 0)
             {
@@ -97,13 +97,12 @@ public class EnemyManager : MonoBehaviour
 
             enemies = new List<Enemy>();
 
-            for (int i = 0; i < data.EnemyCount; i++)
+            for (int i = 0; i < wave.EnemyCount; i++)
             {
-                Enemy enemy = CreateEnemy(data.EnemyData);
-                enemy.WaveCost = data.CostPerUnit;
+                Enemy enemy = CreateEnemy(wave.EnemyData);
+                enemy.WaveCost = wave.CostPerUnit;
                 enemy.SetDestination(_destinationTarget.position);
                 enemy.OnEnemyKilled += OnEnemyKilled;
-                enemycounter++;
                 enemies.Add((Enemy)enemy);
 
                 yield return new WaitForSeconds(2f);
@@ -145,6 +144,7 @@ public class EnemyManager : MonoBehaviour
     {
         _gameMenager.PlayerMoney += money;
         _gameMenager.UpdatePlayerMoney();
+        enemycounter++;
     }
 
     [Serializable]
