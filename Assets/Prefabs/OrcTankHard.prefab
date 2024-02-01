@@ -1498,7 +1498,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 1.948822}
+  m_AnchoredPosition: {x: 0.01, y: 2.56}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3474928418239827603
@@ -1797,7 +1797,7 @@ MonoBehaviour:
   _agent: {fileID: 7637849416563985351}
   _moveTarget: {fileID: 0}
   _healthBar: {fileID: 7409745385254196479}
-  _health: 2001
+  _health: 2501
 --- !u!195 &7637849416563985351
 NavMeshAgent:
   m_ObjectHideFlags: 0

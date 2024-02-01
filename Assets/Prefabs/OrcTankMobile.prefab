@@ -191,6 +191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f59798482c9ee3f4fbf1628b8eebc656, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Prefab: {fileID: 387562307222996060}
   _agent: {fileID: 3569442156542667707}
   _moveTarget: {fileID: 0}
   _healthBar: {fileID: 8408862358821364595}

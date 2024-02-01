@@ -50,7 +50,7 @@ public class Turrete : MonoBehaviour
             }
         }
 
-        foreach (var enemy in EnemyManager.Instance.EnemyList)
+        foreach (var enemy in EnemyManager.Instance.Enemies)
         {
             if (!_target)
             {

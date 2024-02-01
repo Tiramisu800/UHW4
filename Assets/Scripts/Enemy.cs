@@ -14,6 +14,7 @@ public abstract class Enemy : MonoBehaviour, IEnemy
     [SerializeField] protected Image _healthBar; 
     [SerializeField] protected float _health;
 
+    //[SerializeField] protected GameObject Prefab;
     protected float _maxHealth;
 
     public float WaveCost { get; internal set; }

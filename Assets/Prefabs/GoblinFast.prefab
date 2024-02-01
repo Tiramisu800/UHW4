@@ -443,6 +443,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c8deac83b262c346b4aea552e8937bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Prefab: {fileID: 4428335970081977395}
   _agent: {fileID: 2244151279210621107}
   _moveTarget: {fileID: 0}
   _healthBar: {fileID: 5405443459418108173}

@@ -1,4 +1,3 @@
-using Assets.Scripts;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,157 +6,105 @@ using Unity.VisualScripting;
 using UnityEngine;
 using Object = UnityEngine.Object;
 using System.Reflection;
+using System.Runtime.InteropServices.WindowsRuntime;
 
-namespace Assets.Scripts
+namespace Abstract.Scripts
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public abstract class Factory
     {
-        public abstract Enemy CreateFastEnemyClass();
-        public abstract Enemy CreateUsualEnemyClass();
+        public abstract Enemy CreateSpecialEnemyClass(EnemyData data);
+        public abstract Enemy CreateUsualEnemyClass(EnemyData data);
+
     }
 
     public class GoblinSoliderFactory : Factory
     {
-        
-        public override Enemy CreateFastEnemyClass()
+
+        public override Enemy CreateSpecialEnemyClass(EnemyData data)
         {
-            return new EnemySoliderFast();
+            EnemyFactory<EnemySoliderFast> goblinFactory = new EnemyFactory<EnemySoliderFast>();
+            return goblinFactory.CreateEnemy(data);
         }
 
-        public EnemySoliderSlow enemySoliderSlowPrefab;
-        public override Enemy CreateUsualEnemyClass()
+        public override Enemy CreateUsualEnemyClass(EnemyData data)
         {
-            //return new EnemySoliderSlow();
-            return Object.Instantiate(enemySoliderSlowPrefab);
+            EnemyFactory<EnemySolider> goblinFactory = new EnemyFactory<EnemySolider>();
+            return goblinFactory.CreateEnemy(data);
+           
+            /*
+            Enemy goblin = new EnemySolider();
+            GameObject obj = GameObject.Instantiate(goblin.gameObject);
+            var enemy = obj.GetComponent<Enemy>();
+            return enemy;
+            */
         }
     }
 
     public class OrcTankFactory : Factory
     {
-        public override Enemy CreateFastEnemyClass()
+        public override Enemy CreateSpecialEnemyClass(EnemyData data)
         {
-            return new EnemyTankMobile();
+            EnemyFactory<EnemyTankMobile> goblinFactory = new EnemyFactory<EnemyTankMobile>();
+            return goblinFactory.CreateEnemy(data);
         }
 
-        public override Enemy CreateUsualEnemyClass()
+        public override Enemy CreateUsualEnemyClass(EnemyData data)
         {
-            return new EnemyTankHard();
+            EnemyFactory<EnemyTankHard> goblinFactory = new EnemyFactory<EnemyTankHard>();
+            return goblinFactory.CreateEnemy(data);
         }
+
     }
 
     public class MigoFlyFactory : Factory
     {
-        public override Enemy CreateFastEnemyClass()
+        public override Enemy CreateSpecialEnemyClass(EnemyData data)
         {
-            return new EnemyFlyAttacker();
+            EnemyFactory<EnemyFlyAttacker> goblinFactory = new EnemyFactory<EnemyFlyAttacker>();
+            return goblinFactory.CreateEnemy(data);
         }
 
-        public override Enemy CreateUsualEnemyClass()
+        public override Enemy CreateUsualEnemyClass(EnemyData data)
         {
-            return new EnemyFlyUsual();
+            EnemyFactory<EnemyFlyUsual> goblinFactory = new EnemyFactory<EnemyFlyUsual>();
+            return goblinFactory.CreateEnemy(data);
         }
     }
+
+    
 }
 
-public enum EnemyType
-{
-    Goblin,
-    OrcTank,
-    FlyMigo
-}
 
-[CreateAssetMenu(fileName = "EnemyData", menuName = "TD/CreateEnemys")]
-public class EnemyFactory : ScriptableObject
-{
-
-    public List<WaveInfo> Enemies = new List<WaveInfo>();
-
-    public T CreateEnemy<T>(EnemyType enemy) where T : Enemy
+    public class EnemyFactory<T> where T : Enemy
     {
-        var enemyFabric = Enemies.Find(x => x.EnemyType == enemy);
-
-        if (enemyFabric != null)
-        {
-            return Instantiate(enemyFabric.Enemy) as T;
-        }
-
-        return default;
-
-    }
-
-    public WaveInfo GetNextWave(int index)
-    {
+        /// <summary>
+        /// try "CreateEnemy" method but with List of Enemy prefabs
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
         /*
-        if (index % 3 == 1)
+        public T CreateEnemy(EnemyData data)
         {
-            Enemies[index].Factory = new MigoFlyFactory();
-        }
-        else if (index % 3 == 2)
-        {
-            Enemies[index].Factory = new OrcTankFactory();
-        }
-        else if (index % 3 == 0)
-        {
-            Enemies[index].Factory = new GoblinSoliderFactory();
-        }
-
-        if (index % 2 == 1)
-        {
-            Enemies[index].Enemy = Enemies[index].Factory.CreateUsualEnemyClass();
-        }
-        else if (index % 2 == 0)
-        {
-            Enemies[index].Enemy = Enemies[index].Factory.CreateFastEnemyClass();
+            List<T> enemies = new List<T>();
+            foreach (GameObject prefab in data.Prefabs)
+            {
+                GameObject instance = GameObject.Instantiate(prefab);
+                T enemy = instance.GetComponent<T>();
+                enemies.Add(enemy);
+            }
+            return enemies;
         }
         */
 
-        try
+        public T CreateEnemy(EnemyData data)
         {
-            return Enemies[index];
+            GameObject instance = GameObject.Instantiate(data.Prefab);
+            T enemy = instance.GetComponent<T>();
+            return enemy;
         }
-        catch (Exception e)
-        {
-            Debug.LogError(e.Message);
-            return null;
-        }
-    }
-    public Enemy SpawnEnemy(int index)
-    {
-        return Instantiate(Enemies[index].Enemy);
-    }
-}
 
-[Serializable]
-public class WaveInfo
-{
-    public Enemy Enemy;
-    public float WaveDeley;
-    public float EnemyCost;
-    public EnemyType EnemyType;
-    //public Factory Factory;
-} 
-
-/*
-public class WaveInfo
-{
-
-    public Enemy Enemy { get; set; }
-    public float WaveDeley { get; set; }
-    public float EnemyCost { get; set; }
-    public WaveInfo(Enemy enemy, float waveDeley, float enemyCost) 
-    {
-        Enemy = enemy;
-        WaveDeley = waveDeley;
-        EnemyCost =  enemyCost;
     }
 
-    public WaveInfo() { }
-}
-*/
-
-/*
-public class EnemyFactory
-{
-
-}
-*/

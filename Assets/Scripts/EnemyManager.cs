@@ -1,4 +1,5 @@
-using Assets.Scripts;
+
+using Abstract.Scripts;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,17 +16,14 @@ public class EnemyManager : MonoBehaviour
     int enemycounter = 0;
 
     [SerializeField] private GameMenager _gameMenager;
-    //[SerializeField] private EnemyFabric _fabric;
-    [SerializeField] private EnemyFactory _fabric;
-    [SerializeField] private int _waweIndex;
-    [SerializeField] private int _enemyCount;
+    //[SerializeField] private EnemyFactory _fabric;
+
     [SerializeField] private Transform _destinationTarget;
-
     [SerializeField] private bool _started = false;
+    [SerializeField] private List<WaveInfo> waveSettings = new List<WaveInfo>();
 
-    public List<Enemy> EnemyList = new List<Enemy>();
-
-    public int Wawe { get { return _waweIndex; } set { _waweIndex = value; } }
+    private List<Enemy> enemies = new List<Enemy>();
+    public List<Enemy> Enemies { get => enemies; set => enemies = value; }
 
     private void Awake()
     {
@@ -54,21 +52,23 @@ public class EnemyManager : MonoBehaviour
     private void OnGameStart()
     {
         _started = true;
-        StartCoroutine(CreateWawe(_enemyCount, _fabric.GetNextWave(0).WaveDeley));
+        StartCoroutine(CreateWave(waveSettings));
     }
 
     private void EnemyManagerOnStartNewWawe()
     {
         _started = true;
-        StartCoroutine(CreateWawe(_enemyCount, _fabric.GetNextWave(_waweIndex).WaveDeley));
+        StartCoroutine(CreateWave(waveSettings));
     }
 
     private void Update()
     {
-        if (EnemyList.Count > 0 && EnemyList.All(x => x.gameObject.activeSelf == false) && !_started)
+        
+        if (enemies.Count > 0 && enemies.All(x => x.gameObject.activeSelf == false) && !_started)
         {
             OnStartNewWawe?.Invoke();
         }
+
 
         if (enemycounter == 10)
         {
@@ -80,41 +80,79 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-    public IEnumerator CreateWawe(int enemyCount, float waweDelay = 0)
+    public IEnumerator CreateWave(List<WaveInfo> waves)
     {
-        _waweIndex++;
-
-        yield return new WaitForSeconds(waweDelay);
-
-        if (EnemyList.Count > 0)
+        foreach (WaveInfo data in waves)
         {
-            foreach (Enemy enemy in EnemyList)
+            
+            yield return new WaitForSeconds(data.WaveDelay);
+
+            if (enemies.Count > 0)
             {
-                Destroy(enemy.gameObject);
+                foreach (Enemy enemy in enemies)
+                {
+                    Destroy(enemy.gameObject);
+                }
             }
+
+            enemies = new List<Enemy>();
+
+            for (int i = 0; i < data.EnemyCount; i++)
+            {
+                Enemy enemy = CreateEnemy(data.EnemyData);
+                enemy.WaveCost = data.CostPerUnit;
+                enemy.SetDestination(_destinationTarget.position);
+                enemy.OnEnemyKilled += OnEnemyKilled;
+                enemycounter++;
+                enemies.Add((Enemy)enemy);
+
+                yield return new WaitForSeconds(2f);
+            }
+
+            _started = false;
         }
-
-        EnemyList = new List<Enemy>();
-        var wave = _fabric.GetNextWave(_waweIndex);
-
-        for (int i = 0; i < enemyCount; i++)
-        {
-            var enemy = Instantiate(wave.Enemy);
-            enemy.WaveCost = wave.EnemyCost;
-            enemy.SetDestination(_destinationTarget.position);
-            enemy.OnEnemyKilled += OnEnemyKilled;
-            enemycounter++;
-            EnemyList.Add(enemy);
-            yield return new WaitForSeconds(2f);
-        }
-
-        _started = false;
     }
+    
 
+    private Enemy CreateEnemy(EnemyData data)
+    {
+        switch (data.Type)
+        {
+            case EnemyType.GoblinUsual:
+                Factory goblinFactorU = new GoblinSoliderFactory();
+                return goblinFactorU.CreateUsualEnemyClass(data);
+            case EnemyType.GoblinSpecial:
+                Factory goblinFactorS = new GoblinSoliderFactory();
+                return goblinFactorS.CreateSpecialEnemyClass(data);
+            case EnemyType.OrcTankUsual:
+                Factory tankFactorU = new OrcTankFactory();
+                return tankFactorU.CreateUsualEnemyClass(data);
+            case EnemyType.OrcTankSpecial:
+                Factory tankFactorS = new OrcTankFactory();
+                return tankFactorS.CreateSpecialEnemyClass(data);
+            case EnemyType.FlyMigoUsual:
+                Factory flyFactorU = new MigoFlyFactory();
+                return flyFactorU.CreateUsualEnemyClass(data);
+            case EnemyType.FlyMigoSpecial:
+                Factory flyFactorS = new MigoFlyFactory();
+                return flyFactorS.CreateSpecialEnemyClass(data);
+            default:
+                return null;
+        }
+    }
 
     private void OnEnemyKilled(float money)
     {
         _gameMenager.PlayerMoney += money;
         _gameMenager.UpdatePlayerMoney();
+    }
+
+    [Serializable]
+    public class WaveInfo
+    {
+        public int EnemyCount;
+        public float WaveDelay;
+        public float CostPerUnit;
+        public EnemyData EnemyData;
     }
 }

@@ -1003,7 +1003,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 97, y: -35}
+  m_AnchoredPosition: {x: 120.20001, y: -35}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &309733304
@@ -3356,7 +3356,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 97, y: -85}
+  m_AnchoredPosition: {x: 120.20001, y: -85}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1512528122
@@ -4540,7 +4540,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 97, y: -85}
+  m_AnchoredPosition: {x: 120.20001, y: -85}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1807454702
@@ -4983,12 +4983,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameMenager: {fileID: 1868182256}
-  _fabric: {fileID: 11400000, guid: 6b95f3f954d1f274a897f01c163bb5c2, type: 2}
-  _waweIndex: -1
-  _enemyCount: 15
   _destinationTarget: {fileID: 2113760661}
   _started: 0
-  EnemyList: []
+  waveSettings:
+  - EnemyCount: 1
+    WaveDelay: 1
+    CostPerUnit: 5
+    EnemyData: {fileID: 11400000, guid: 2f5fad9b6cd6f2a40a110286e81a89d8, type: 2}
+  - EnemyCount: 10
+    WaveDelay: 1
+    CostPerUnit: 5
+    EnemyData: {fileID: 11400000, guid: 14d99b8984b3c1d48ae9cbc074eb9e7f, type: 2}
+  - EnemyCount: 5
+    WaveDelay: 3
+    CostPerUnit: 15
+    EnemyData: {fileID: 11400000, guid: b5126ec622dc0fd41882d774f24e62fe, type: 2}
+  - EnemyCount: 10
+    WaveDelay: 2
+    CostPerUnit: 10
+    EnemyData: {fileID: 11400000, guid: 2f5fad9b6cd6f2a40a110286e81a89d8, type: 2}
+  - EnemyCount: 10
+    WaveDelay: 4
+    CostPerUnit: 20
+    EnemyData: {fileID: 11400000, guid: fb41e777ff6f36d42847874433beaf3d, type: 2}
+  - EnemyCount: 5
+    WaveDelay: 4
+    CostPerUnit: 30
+    EnemyData: {fileID: 11400000, guid: ff9ae90f3f0de7947b7016819d19b9bf, type: 2}
+  - EnemyCount: 3
+    WaveDelay: 4
+    CostPerUnit: 40
+    EnemyData: {fileID: 11400000, guid: a35ff604fcae58d4d919f7f78e60477e, type: 2}
 --- !u!1 &2038733346
 GameObject:
   m_ObjectHideFlags: 0
@@ -5132,7 +5157,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 97, y: -35}
+  m_AnchoredPosition: {x: 120.20001, y: -35}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2042580515
