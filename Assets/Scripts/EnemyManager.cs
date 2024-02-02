@@ -18,8 +18,6 @@ public class EnemyManager : MonoBehaviour
     int waveindex = -1;
 
     [SerializeField] private GameMenager _gameMenager;
-    //[SerializeField] private EnemyFactory _fabric;
-
     [SerializeField] private Transform _destinationTarget;
     [SerializeField] private bool _started = false;
     [SerializeField] private List<WaveInfo> waveSettings = new List<WaveInfo>();
@@ -125,40 +123,6 @@ public class EnemyManager : MonoBehaviour
             return null;
         }
     }
-
-    /*
-    public IEnumerator CreateWave(List<WaveInfo> waves)
-    {
-        foreach (WaveInfo wave in waves)
-        {
-
-            yield return new WaitForSeconds(wave.WaveDelay);
-
-            if (enemies.Count > 0)
-            {
-                foreach (Enemy enemy in enemies)
-                {
-                    Destroy(enemy.gameObject);
-                }
-            }
-
-            enemies = new List<Enemy>();
-
-            for (int i = 0; i < wave.EnemyCount; i++)
-            {
-                Enemy enemy = CreateEnemy(wave.EnemyData);
-                enemy.WaveCost = wave.CostPerUnit;
-                enemy.SetDestination(_destinationTarget.position);
-                enemy.OnEnemyKilled += OnEnemyKilled;
-                enemies.Add((Enemy)enemy);
-
-                yield return new WaitForSeconds(2f);
-            }
-            _started = false;
-
-        }
-    }
-    */
 
     private Enemy CreateEnemy(EnemyData data)
     {

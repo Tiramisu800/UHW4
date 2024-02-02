@@ -33,13 +33,6 @@ namespace Abstract.Scripts
         {
             EnemyFactory<EnemySolider> goblinUFactory = new EnemyFactory<EnemySolider>();
             return goblinUFactory.CreateEnemy(data);
-           
-            /*
-            Enemy goblin = new EnemySolider();
-            GameObject obj = GameObject.Instantiate(goblin.gameObject);
-            var enemy = obj.GetComponent<Enemy>();
-            return enemy;
-            */
         }
     }
 
