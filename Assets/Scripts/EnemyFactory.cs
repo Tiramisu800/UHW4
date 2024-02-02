@@ -25,14 +25,14 @@ namespace Abstract.Scripts
 
         public override Enemy CreateSpecialEnemyClass(EnemyData data)
         {
-            EnemyFactory<EnemySoliderFast> goblinFactory = new EnemyFactory<EnemySoliderFast>();
-            return goblinFactory.CreateEnemy(data);
+            EnemyFactory<EnemySoliderFast> goblinSFactory = new EnemyFactory<EnemySoliderFast>();
+            return goblinSFactory.CreateEnemy(data);
         }
 
         public override Enemy CreateUsualEnemyClass(EnemyData data)
         {
-            EnemyFactory<EnemySolider> goblinFactory = new EnemyFactory<EnemySolider>();
-            return goblinFactory.CreateEnemy(data);
+            EnemyFactory<EnemySolider> goblinUFactory = new EnemyFactory<EnemySolider>();
+            return goblinUFactory.CreateEnemy(data);
            
             /*
             Enemy goblin = new EnemySolider();
@@ -47,14 +47,14 @@ namespace Abstract.Scripts
     {
         public override Enemy CreateSpecialEnemyClass(EnemyData data)
         {
-            EnemyFactory<EnemyTankMobile> goblinFactory = new EnemyFactory<EnemyTankMobile>();
-            return goblinFactory.CreateEnemy(data);
+            EnemyFactory<EnemyTankMobile> tankSFactory = new EnemyFactory<EnemyTankMobile>();
+            return tankSFactory.CreateEnemy(data);
         }
 
         public override Enemy CreateUsualEnemyClass(EnemyData data)
         {
-            EnemyFactory<EnemyTankHard> goblinFactory = new EnemyFactory<EnemyTankHard>();
-            return goblinFactory.CreateEnemy(data);
+            EnemyFactory<EnemyTankHard> tankUFactory = new EnemyFactory<EnemyTankHard>();
+            return tankUFactory.CreateEnemy(data);
         }
 
     }
@@ -63,14 +63,14 @@ namespace Abstract.Scripts
     {
         public override Enemy CreateSpecialEnemyClass(EnemyData data)
         {
-            EnemyFactory<EnemyFlyAttacker> goblinFactory = new EnemyFactory<EnemyFlyAttacker>();
-            return goblinFactory.CreateEnemy(data);
+            EnemyFactory<EnemyFlyAttacker> flySFactory = new EnemyFactory<EnemyFlyAttacker>();
+            return flySFactory.CreateEnemy(data);
         }
 
         public override Enemy CreateUsualEnemyClass(EnemyData data)
         {
-            EnemyFactory<EnemyFlyUsual> goblinFactory = new EnemyFactory<EnemyFlyUsual>();
-            return goblinFactory.CreateEnemy(data);
+            EnemyFactory<EnemyFlyUsual> flyUFactory = new EnemyFactory<EnemyFlyUsual>();
+            return flyUFactory.CreateEnemy(data);
         }
     }
 

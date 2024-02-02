@@ -1,14 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemyPassCounter : MonoBehaviour
 {
-    [SerializeField] private int _passed;
-
+    [SerializeField] private GameObject _loseContainer;
+    
     private void OnTriggerEnter(Collider other)
     {
-        _passed++;
+        
         other.gameObject.SetActive(false);
+        _loseContainer.SetActive(true);
+        Debug.Log("Touched");
+
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(0);
     }
 }

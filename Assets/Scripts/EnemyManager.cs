@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
@@ -14,6 +15,7 @@ public class EnemyManager : MonoBehaviour
 
     public static EnemyManager Instance;
     int enemycounter = 0;
+    int waveindex = -1;
 
     [SerializeField] private GameMenager _gameMenager;
     //[SerializeField] private EnemyFactory _fabric;
@@ -54,13 +56,13 @@ public class EnemyManager : MonoBehaviour
         _started = true;
         StartCoroutine(CreateWave(waveSettings));
     }
-
+    
     private void EnemyManagerOnStartNewWawe()
     {
         _started = true;
         StartCoroutine(CreateWave(waveSettings));
     }
-
+    
     private void Update()
     {
         
@@ -82,9 +84,54 @@ public class EnemyManager : MonoBehaviour
 
     public IEnumerator CreateWave(List<WaveInfo> waves)
     {
+        waveindex++;
+
+        yield return new WaitForSeconds(waves[waveindex].WaveDelay);
+
+        if (enemies.Count > 0)
+        {
+            foreach (Enemy enemy in enemies)
+            {
+                Destroy(enemy.gameObject);
+            }
+        }
+
+        var wave = GetNextWave(waveindex);
+        enemies = new List<Enemy>();
+
+        for (int i = 0; i < wave.EnemyCount; i++)
+        {
+            Enemy enemy = CreateEnemy(wave.EnemyData);
+            enemy.WaveCost = wave.CostPerUnit;
+            enemy.SetDestination(_destinationTarget.position);
+            enemy.OnEnemyKilled += OnEnemyKilled;
+            enemies.Add((Enemy)enemy);
+
+            yield return new WaitForSeconds(2f);
+        }
+        _started = false;
+    }
+
+
+    public WaveInfo GetNextWave(int index)
+    {
+        try
+        {
+            return waveSettings[index];
+        }
+        catch (Exception e)
+        {
+            Debug.LogError(e.Message);
+            return null;
+        }
+    }
+
+    /*
+    public IEnumerator CreateWave(List<WaveInfo> waves)
+    {
         foreach (WaveInfo wave in waves)
         {
-            
+
             yield return new WaitForSeconds(wave.WaveDelay);
 
             if (enemies.Count > 0)
@@ -107,11 +154,11 @@ public class EnemyManager : MonoBehaviour
 
                 yield return new WaitForSeconds(2f);
             }
-
             _started = false;
+
         }
     }
-    
+    */
 
     private Enemy CreateEnemy(EnemyData data)
     {
